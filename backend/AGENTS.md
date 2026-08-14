@@ -39,10 +39,30 @@
 
 ## 后端质量命令
 
-```powershell
+```bash
 cd backend
-python -m ruff format --check .
-python -m ruff check .
-python -m mypy app
-python -m pytest -q
+uv run python -m ruff format --check .
+uv run python -m ruff check .
+uv run python -m mypy app
+uv run python -m pytest -q
 ```
+
+## 本地启动（uv）
+
+以下命令均在 `backend/` 目录下执行，无需手动激活虚拟环境。
+
+```bash
+uv venv --python 3.12
+# 创建 Python 3.12 虚拟环境；本机未安装 3.12 时 uv 会自动下载对应解释器
+
+uv sync
+# 按 pyproject.toml 与 uv.lock 安装运行时依赖与 dev 工具（ruff、mypy、pytest）
+
+uv run alembic upgrade head
+# 执行 Alembic 数据库迁移，初始化数据表结构；本地默认使用 SQLite，会在 backend/ 下生成 uni_builder.db
+
+uv run python -m app.main --host 127.0.0.1 --port 8000
+# 启动 FastAPI 后端服务（内置端口占用预检，占用时会输出中文排查指引）；开发调试时可加 --reload
+```
+
+启动验证：`curl http://127.0.0.1:8000/api/health/live` 返回 `{"status":"ok"}` 即表示服务启动成功。

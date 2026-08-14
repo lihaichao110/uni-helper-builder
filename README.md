@@ -74,10 +74,9 @@ docker compose up -d
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+uv venv --python 3.12
+uv sync
+uv run python -m app.main --reload
 ```
 
 前端：
@@ -92,7 +91,7 @@ npm run dev
 
 ```bash
 cd backend
-pytest
+uv run python -m pytest
 cd ../frontend
 npm run build
 ```

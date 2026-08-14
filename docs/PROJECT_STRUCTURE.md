@@ -12,22 +12,24 @@
 uni-builder/
 ├── AGENTS.md                  # 全仓库 Codex 持久化规则
 ├── README.md                  # 项目介绍、部署与使用说明
+├── .python-version          # uv 使用的固定解释器版本（3.12）
 ├── .env.example              # 环境变量示例，不包含真实密钥
 ├── docker-compose.yml        # PostgreSQL、Redis、API、Worker、Scheduler、Web 编排
 ├── scripts/
 │   └── check_source_size.py  # Python 与 TypeScript 源码行数门禁
 ├── docs/
 │   └── PROJECT_STRUCTURE.md  # 当前目录职责与目标结构
+├── .codex/
+│   └── skills/               # Codex 项目级 Agent 技能（如 commit message 生成器）
 ├── backend/
 │   ├── AGENTS.md             # Python/FastAPI 子树规则
 │   ├── app/                  # FastAPI、Celery、SQLAlchemy 核心应用
 │   │   └── routers/          # 按资源划分的 HTTP API 路由
 │   ├── alembic/              # 数据库迁移环境与版本脚本
 │   ├── tests/                # 后端 API 与构建流程测试
-│   ├── Dockerfile            # Python 3.12 后端镜像
-│   ├── requirements.txt      # 运行时依赖
-│   ├── requirements-dev.txt  # 格式化、静态检查与类型检查依赖
-│   ├── pyproject.toml        # Ruff、Mypy 与 Pytest 配置
+│   ├── Dockerfile            # Python 3.12 后端镜像，使用 uv sync 安装依赖
+│   ├── pyproject.toml        # 项目元数据、依赖清单与 Ruff、Mypy、Pytest 配置
+│   ├── uv.lock               # uv 锁定的完整依赖闭包（单一来源的锁文件）
 │   └── alembic.ini           # Alembic 配置入口
 ├── frontend/
 │   ├── AGENTS.md             # React/TypeScript 子树规则

@@ -1,3 +1,31 @@
+[project]
+name = "uni-builder-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "sqlalchemy==2.0.36",
+    "psycopg[binary]==3.2.3",
+    "alembic==1.14.0",
+    "pydantic-settings==2.7.0",
+    "pyjwt==2.10.1",
+    "argon2-cffi==23.1.0",
+    "cryptography==44.0.0",
+    "celery[redis]==5.4.0",
+    "redis==5.2.1",
+    "docker==7.1.0",
+    "python-multipart==0.0.20",
+    "httpx==0.28.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.4",
+    "ruff==0.16.3",
+    "mypy==2.3.0",
+]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100
