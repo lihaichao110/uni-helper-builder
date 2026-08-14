@@ -1,0 +1,4 @@
+INFO:     127.0.0.1:1396 - "OPTIONS /api/auth/refresh HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:7245 - "OPTIONS /api/auth/refresh HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:7246 - "OPTIONS /api/auth/refresh HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:5631 - "OPTIONS /api/auth/login HTTP/1.1" 400 Bad Request
