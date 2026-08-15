@@ -12,7 +12,6 @@ const queryClient = new QueryClient({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <ConfigProvider locale={zhCN} theme={{ token: { colorPrimary: '#5b7cfa', borderRadius: 10 } }}>
       <AntApp>
         <QueryClientProvider client={queryClient}>
@@ -22,5 +21,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </QueryClientProvider>
       </AntApp>
     </ConfigProvider>
-  </React.StrictMode>,
 )

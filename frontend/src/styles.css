@@ -151,6 +151,12 @@ body {
   font-size: 14px;
   padding: 5px 12px;
 }
+.table-actions {
+  white-space: nowrap;
+}
+.table-actions .ant-btn {
+  padding-inline: 8px;
+}
 .build-overview .ant-card-body {
   display: flex;
   flex-direction: column;

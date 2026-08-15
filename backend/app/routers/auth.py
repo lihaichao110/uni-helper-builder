@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from typing import Literal, TypedDict
 
 import jwt
 from fastapi import APIRouter, Cookie, Depends, HTTPException, Response, status
@@ -16,17 +17,39 @@ from ..services import write_audit
 router = APIRouter(prefix="/auth", tags=["认证"])
 
 
+class _CookieAttrs(TypedDict):
+    secure: bool
+    samesite: Literal["lax", "strict"]
+
+
+def _cookie_attrs() -> _CookieAttrs:
+    """构造 refresh_token Cookie 属性；secure/samesite 按环境区分，保证开发与生产都能被浏览器保存并回传。
+
+    - development：secure=False、samesite=lax，兼容本地 HTTP 与跨端口同站直连；
+    - production：secure=True（可用 COOKIE_SECURE=false 覆盖以适配纯 HTTP 部署）、samesite=strict，
+      前端与 /api 同源经 nginx 反代，strict 不影响回传。
+    """
+    settings = get_settings()
+    production = settings.environment == "production"
+    secure = production if settings.cookie_secure is None else settings.cookie_secure
+    return {"secure": secure, "samesite": "strict" if production else "lax"}
+
+
 def set_refresh_cookie(response: Response, token: str) -> None:
     settings = get_settings()
     response.set_cookie(
         "refresh_token",
         token,
         httponly=True,
-        secure=settings.environment == "production",
-        samesite="strict",
         max_age=settings.refresh_token_days * 86400,
         path="/api/auth",
+        **_cookie_attrs(),
     )
+
+
+def clear_refresh_cookie(response: Response) -> None:
+    """删除 refresh_token Cookie；属性需与下发时一致才能命中同一条 Cookie。"""
+    response.delete_cookie("refresh_token", httponly=True, path="/api/auth", **_cookie_attrs())
 
 
 @router.post("/login", response_model=TokenResponse)
@@ -68,7 +91,7 @@ def refresh(
 def logout(
     response: Response, user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
-    response.delete_cookie("refresh_token", path="/api/auth")
+    clear_refresh_cookie(response)
     write_audit(db, user, "auth.logout", "user", user.id)
     db.commit()
 

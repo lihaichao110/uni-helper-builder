@@ -4,7 +4,7 @@ import { App, Button, Card, Form, Input, Modal, Select, Space, Table, Tag, Typog
 import { PlusOutlined } from '@ant-design/icons'
 import { api } from '../api'
 import type { Role, User } from '../types'
-import { formatDate } from '../utils'
+import { extractErrorMessage, formatDate } from '../utils'
 
 export default function UsersPage() {
   const [open, setOpen] = useState(false)
@@ -24,15 +24,15 @@ export default function UsersPage() {
       form.resetFields()
       queryClient.invalidateQueries({ queryKey: ['users'] })
     },
-    onError: () => message.error('创建失败，用户名可能已存在'),
+    onError: (error) => message.error(extractErrorMessage(error, '创建失败，用户名可能已存在')),
   })
   const update = async (id: string, values: Partial<Pick<User, 'role' | 'is_active'>>) => {
     try {
       await api.patch(`/users/${id}`, values)
       message.success('用户已更新')
       queryClient.invalidateQueries({ queryKey: ['users'] })
-    } catch {
-      message.error('用户更新失败')
+    } catch (error) {
+      message.error(extractErrorMessage(error, '用户更新失败'))
     }
   }
   return (

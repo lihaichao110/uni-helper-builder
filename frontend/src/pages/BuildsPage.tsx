@@ -5,7 +5,13 @@ import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../api'
 import type { Build, InstallStrategy, Project } from '../types'
-import { buildStatusColor, formatDate, projectNameMap } from '../utils'
+import {
+  buildStatusColor,
+  buildsRefetchInterval,
+  extractErrorMessage,
+  formatDate,
+  projectNameMap,
+} from '../utils'
 
 interface BuildForm {
   project_id: string
@@ -24,7 +30,7 @@ export default function BuildsPage() {
   const { data: builds = [], isLoading } = useQuery({
     queryKey: ['builds'],
     queryFn: () => api.get<Build[]>('/builds').then((r) => r.data),
-    refetchInterval: 5000,
+    refetchInterval: buildsRefetchInterval,
   })
   const { data: projects = [] } = useQuery({
     queryKey: ['projects'],
@@ -49,7 +55,8 @@ export default function BuildsPage() {
       queryClient.invalidateQueries({ queryKey: ['builds'] })
       navigate(`/builds/${response.data.id}`)
     },
-    onError: () => message.error('创建失败，该项目可能已有运行中的任务'),
+    onError: (error) =>
+      message.error(extractErrorMessage(error, '创建失败，该项目可能已有运行中的任务')),
   })
   const selectProject = (id: string) => {
     setSelectedProject(id)

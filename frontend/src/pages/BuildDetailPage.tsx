@@ -5,7 +5,13 @@ import { ArrowLeftOutlined, DownloadOutlined, StopOutlined } from '@ant-design/i
 import { useNavigate, useParams } from 'react-router-dom'
 import { API_BASE, api, getAccessToken } from '../api'
 import type { Build, Project } from '../types'
-import { buildStatusColor, bytes, formatDate } from '../utils'
+import {
+  ACTIVE_BUILD_STATUSES,
+  buildStatusColor,
+  bytes,
+  extractErrorMessage,
+  formatDate,
+} from '../utils'
 
 const stages = ['queued', 'cloning', 'installing', 'building', 'packaging', 'succeeded']
 
@@ -31,7 +37,7 @@ export default function BuildDetailPage() {
       message.success('取消请求已提交')
       queryClient.invalidateQueries({ queryKey: ['build', id] })
     },
-    onError: () => message.error('当前任务无法取消'),
+    onError: (error) => message.error(extractErrorMessage(error, '当前任务无法取消')),
   })
   useEffect(() => {
     let socket: WebSocket | undefined
@@ -65,9 +71,7 @@ export default function BuildDetailPage() {
     build.status === 'failed' || build.status === 'canceled'
       ? stages.indexOf('building')
       : Math.max(0, stages.indexOf(build.status))
-  const active = ['queued', 'cloning', 'installing', 'building', 'packaging', 'canceling'].includes(
-    build.status,
-  )
+  const active = ACTIVE_BUILD_STATUSES.has(build.status)
   const download = async () => {
     if (!build.artifact) return
     const response = await api.get(`/artifacts/${build.artifact.id}/download`, {

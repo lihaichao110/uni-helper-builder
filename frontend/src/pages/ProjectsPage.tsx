@@ -20,6 +20,7 @@ import { ApiOutlined, EditOutlined, PlusOutlined, StopOutlined } from '@ant-desi
 import { api } from '../api'
 import { useAuthStore } from '../store'
 import type { Credential, Project } from '../types'
+import { extractErrorMessage } from '../utils'
 
 type ProjectForm = Omit<Project, 'id' | 'created_at' | 'updated_at'>
 const installOptions = ['none', 'npm-ci', 'yarn-frozen', 'pnpm-frozen'].map((value) => ({
@@ -52,14 +53,14 @@ export default function ProjectsPage() {
       setEditing(null)
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
-    onError: () => message.error('保存失败，请检查项目配置'),
+    onError: (error) => message.error(extractErrorMessage(error, '保存失败，请检查项目配置')),
   })
   const test = async (id: string) => {
     try {
       const { data } = await api.post(`/projects/${id}/test-repository`)
       message.success(`连接成功，发现 ${data.ref_count} 个 Ref`)
-    } catch {
-      message.error('仓库连接失败，请检查地址和凭据')
+    } catch (error) {
+      message.error(extractErrorMessage(error, '仓库连接失败，请检查地址和凭据'))
     }
   }
   const disable = async (id: string) => {
@@ -124,7 +125,8 @@ export default function ProjectsPage() {
             { title: '安装策略', dataIndex: 'install_strategy' },
             {
               title: '操作',
-              width: 220,
+              width: 240,
+              onCell: () => ({ className: 'table-actions' }),
               render: (_, project) =>
                 user.role === 'admin' ? (
                   <Space>

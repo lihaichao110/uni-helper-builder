@@ -3,6 +3,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { api, setAccessToken } from '../api'
 import { useAuthStore } from '../store'
 import type { User } from '../types'
+import { extractErrorMessage } from '../utils'
 
 export default function LoginPage() {
   const setUser = useAuthStore((state) => state.setUser)
@@ -12,8 +13,8 @@ export default function LoginPage() {
       const response = await api.post<{ access_token: string; user: User }>('/auth/login', values)
       setAccessToken(response.data.access_token)
       setUser(response.data.user)
-    } catch {
-      message.error('登录失败，请检查用户名和密码')
+    } catch (error) {
+      message.error(extractErrorMessage(error, '登录失败，请检查用户名和密码'))
     }
   }
   return (

@@ -16,6 +16,7 @@ import {
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { api } from '../api'
 import type { Credential } from '../types'
+import { extractErrorMessage } from '../utils'
 
 interface CredentialForm {
   name: string
@@ -43,15 +44,15 @@ export default function CredentialsPage() {
       form.resetFields()
       queryClient.invalidateQueries({ queryKey: ['credentials'] })
     },
-    onError: () => message.error('凭据保存失败'),
+    onError: (error) => message.error(extractErrorMessage(error, '凭据保存失败')),
   })
   const remove = async (id: string) => {
     try {
       await api.delete(`/credentials/${id}`)
       message.success('凭据已删除')
       queryClient.invalidateQueries({ queryKey: ['credentials'] })
-    } catch {
-      message.error('凭据仍被项目使用或删除失败')
+    } catch (error) {
+      message.error(extractErrorMessage(error, '凭据仍被项目使用或删除失败'))
     }
   }
   return (

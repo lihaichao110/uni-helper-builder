@@ -3,9 +3,11 @@ import type { User } from './types'
 
 let accessToken = ''
 let refreshPromise: Promise<string> | null = null
-export const API_BASE = import.meta.env.DEV ? 'http://127.0.0.1:8000/api' : '/api'
+// 始终走同源相对路径：开发环境由 vite proxy 转发到 127.0.0.1:8000，生产由 nginx 反代 /api。
+// 这样 refresh_token Cookie 与页面同源，不会被浏览器的跨站 Cookie 策略拦截。
+export const API_BASE = '/api'
 
-export const api = axios.create({ baseURL: API_BASE, withCredentials: true })
+export const api = axios.create({ baseURL: API_BASE, withCredentials: true, timeout: 60000 })
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`

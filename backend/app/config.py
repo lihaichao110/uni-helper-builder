@@ -11,6 +11,9 @@ class Settings(BaseSettings):
 
     app_name: str = "Uni WGT Builder"  # 应用名称，用于 FastAPI 文档标题等展示，无业务影响
     environment: str = "development"  # 运行环境；production 时收紧 CORS 并为 Cookie 加 secure
+    cookie_secure: bool | None = (
+        None  # refresh_token Cookie 的 secure 标记；None 时按 environment 推断，纯 HTTP 部署须显式设为 false
+    )
     database_url: str = "sqlite:///./uni_builder.db"  # 数据库连接串；默认 SQLite，部署可覆盖
     redis_url: str = "redis://localhost:6379/0"  # Redis 地址：Celery broker、SSE 日志与健康检查
     jwt_secret: str = "change-this-jwt-secret"  # JWT 签名密钥；默认仅供开发，生产须用 .env 覆盖

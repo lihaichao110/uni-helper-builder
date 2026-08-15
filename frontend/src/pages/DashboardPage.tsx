@@ -8,13 +8,13 @@ import {
 } from '@ant-design/icons'
 import { api } from '../api'
 import type { Build, Project } from '../types'
-import { buildStatusColor, formatDate, projectNameMap } from '../utils'
+import { buildStatusColor, buildsRefetchInterval, formatDate, projectNameMap } from '../utils'
 
 export default function DashboardPage() {
   const { data: builds = [] } = useQuery({
     queryKey: ['builds'],
     queryFn: () => api.get<Build[]>('/builds').then((r) => r.data),
-    refetchInterval: 5000,
+    refetchInterval: buildsRefetchInterval,
   })
   const { data: projects = [] } = useQuery({
     queryKey: ['projects'],
