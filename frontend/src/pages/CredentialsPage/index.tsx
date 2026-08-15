@@ -14,9 +14,9 @@ import {
   Typography,
 } from 'antd'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
-import { api } from '../api'
-import type { Credential } from '../types'
-import { extractErrorMessage } from '../utils'
+import { api } from '../../api'
+import type { Credential } from '../../types/credential'
+import { extractErrorMessage } from '../../utils/error'
 
 interface CredentialForm {
   name: string

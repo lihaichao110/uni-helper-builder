@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
-import type { User } from './types'
+import type { User } from './types/user'
 
 let accessToken = ''
 let refreshPromise: Promise<string> | null = null

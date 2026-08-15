@@ -3,15 +3,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { App, Button, Card, Descriptions, Result, Space, Spin, Steps, Tag, Typography } from 'antd'
 import { ArrowLeftOutlined, DownloadOutlined, StopOutlined } from '@ant-design/icons'
 import { useNavigate, useParams } from 'react-router-dom'
-import { API_BASE, api, getAccessToken } from '../api'
-import type { Build, Project } from '../types'
-import {
-  ACTIVE_BUILD_STATUSES,
-  buildStatusColor,
-  bytes,
-  extractErrorMessage,
-  formatDate,
-} from '../utils'
+import { API_BASE, api, getAccessToken } from '../../api'
+import { ACTIVE_BUILD_STATUSES, buildStatusColor } from '../../constants/build'
+import type { Build } from '../../types/build'
+import type { Project } from '../../types/project'
+import { formatDate, bytes } from '../../utils/format'
+import { extractErrorMessage } from '../../utils/error'
 
 const stages = ['queued', 'cloning', 'installing', 'building', 'packaging', 'succeeded']
 

@@ -12,8 +12,8 @@ import {
   MenuUnfoldOutlined,
   TeamOutlined,
 } from '@ant-design/icons'
-import { api, setAccessToken } from '../api'
-import { useAuthStore } from '../store'
+import { api, setAccessToken } from '../../api'
+import { useAuthStore } from '../../store/auth'
 
 const { Header, Sider, Content } = Layout
 

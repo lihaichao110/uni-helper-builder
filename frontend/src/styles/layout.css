@@ -1,0 +1,89 @@
+.app-shell {
+  min-height: 100vh;
+}
+.app-sider {
+  background: linear-gradient(180deg, #101a35 0%, #18264b 100%) !important;
+  box-shadow: 8px 0 28px rgba(17, 29, 59, 0.08);
+}
+.brand {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 22px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #708cff, #5de1c3);
+  color: #0f1832;
+}
+.app-header {
+  height: 72px;
+  background: rgba(255, 255, 255, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid #e9edf5;
+}
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.user-meta small {
+  color: #8992a6;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.app-content {
+  padding: 30px;
+  background: #f4f6fb;
+}
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.page-heading h2 {
+  margin: 0 0 4px !important;
+  letter-spacing: -0.4px;
+}
+.content-card,
+.metric-card {
+  border: 1px solid #e9edf5;
+  box-shadow: 0 9px 28px rgba(25, 43, 83, 0.055);
+}
+.metric-card .ant-statistic-content-prefix {
+  color: #5b7cfa;
+  margin-right: 12px;
+}
+.metric-card .ant-statistic-content {
+  font-weight: 700;
+}
+.section-row {
+  margin-top: 18px;
+}
+.health-card .ant-card-body {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .app-content {
+    padding: 20px;
+  }
+}

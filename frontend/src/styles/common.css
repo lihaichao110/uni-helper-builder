@@ -1,0 +1,20 @@
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+}
+.large-status {
+  font-size: 14px;
+  padding: 5px 12px;
+}
+.table-actions {
+  white-space: nowrap;
+}
+.table-actions .ant-btn {
+  padding-inline: 8px;
+}
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

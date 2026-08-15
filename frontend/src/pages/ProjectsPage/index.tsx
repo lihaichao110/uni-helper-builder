@@ -17,10 +17,11 @@ import {
   Typography,
 } from 'antd'
 import { ApiOutlined, EditOutlined, PlusOutlined, StopOutlined } from '@ant-design/icons'
-import { api } from '../api'
-import { useAuthStore } from '../store'
-import type { Credential, Project } from '../types'
-import { extractErrorMessage } from '../utils'
+import { api } from '../../api'
+import { useAuthStore } from '../../store/auth'
+import type { Credential } from '../../types/credential'
+import type { Project } from '../../types/project'
+import { extractErrorMessage } from '../../utils/error'
 
 type ProjectForm = Omit<Project, 'id' | 'created_at' | 'updated_at'>
 const installOptions = ['none', 'npm-ci', 'yarn-frozen', 'pnpm-frozen'].map((value) => ({

@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { App, Button, Card, Form, Input, Modal, Select, Space, Table, Tag, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { api } from '../api'
-import type { Role, User } from '../types'
-import { extractErrorMessage, formatDate } from '../utils'
+import { api } from '../../api'
+import type { Role, User } from '../../types/user'
+import { extractErrorMessage } from '../../utils/error'
+import { formatDate } from '../../utils/format'
 
 export default function UsersPage() {
   const [open, setOpen] = useState(false)

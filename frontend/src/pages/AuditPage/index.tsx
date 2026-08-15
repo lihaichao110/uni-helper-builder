@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Card, Table, Typography } from 'antd'
-import { api } from '../api'
-import { formatDate } from '../utils'
+import { api } from '../../api'
+import { formatDate } from '../../utils/format'
 
 interface Audit {
   id: string

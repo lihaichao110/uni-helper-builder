@@ -3,15 +3,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { App, AutoComplete, Button, Card, Form, Modal, Select, Table, Tag, Typography } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../api'
-import type { Build, InstallStrategy, Project } from '../types'
-import {
-  buildStatusColor,
-  buildsRefetchInterval,
-  extractErrorMessage,
-  formatDate,
-  projectNameMap,
-} from '../utils'
+import { api } from '../../api'
+import { buildStatusColor } from '../../constants/build'
+import type { Build } from '../../types/build'
+import type { InstallStrategy, Project } from '../../types/project'
+import { buildsRefetchInterval, projectNameMap } from '../../utils/build'
+import { formatDate } from '../../utils/format'
+import { extractErrorMessage } from '../../utils/error'
 
 interface BuildForm {
   project_id: string

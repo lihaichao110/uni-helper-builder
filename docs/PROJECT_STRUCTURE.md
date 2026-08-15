@@ -34,8 +34,16 @@ uni-builder/
 ├── frontend/
 │   ├── AGENTS.md             # React/TypeScript 子树规则
 │   ├── src/
-│   │   ├── components/       # 当前跨页面布局组件
-│   │   └── pages/            # 当前路由页面组件
+│   │   ├── components/       # 跨页面共享组件，每个组件一个文件夹，入口为其中的 index.tsx
+│   │   ├── constants/        # 按业务模块拆分的全局常量（如 build 构建状态集合）
+│   │   ├── pages/            # 路由页面组件，每页一个文件夹，入口为其中的 index.tsx
+│   │   ├── store/            # Zustand 客户端状态，按模块拆分（如 auth）
+│   │   ├── styles/           # 按模块拆分的全局样式，入口为 index.css
+│   │   ├── types/            # 共享类型定义（user/credential/project/build）
+│   │   ├── utils/            # 工具函数（build/format/error）
+│   │   ├── api.ts            # Axios 实例、Token 刷新与请求封装
+│   │   ├── App.tsx           # 登录态初始化、路由和权限入口
+│   │   └── main.tsx          # 应用挂载入口
 │   ├── eslint.config.js      # ESLint flat config
 │   ├── .prettierrc.json      # Prettier 格式配置
 │   ├── package.json          # 前端依赖与质量命令
@@ -60,8 +68,13 @@ uni-builder/
 - `backend/app/tasks.py`：当前 Celery 构建任务及容器执行流程；接近建议规模阈值，后续新增职责前应优先拆分。
 - `backend/app/models.py`、`schemas.py`：当前数据库模型与 API Schema。
 - `frontend/src/App.tsx`：登录态初始化、路由和权限入口。
-- `frontend/src/pages/`：仪表盘、项目、凭据、构建、用户和审计页面。
-- `frontend/src/api.ts`、`store.ts`、`types.ts`：当前共享请求、状态与类型入口。
+- `frontend/src/pages/`：仪表盘、项目、凭据、构建、用户和审计页面；每个页面一个文件夹，组件位于其中的 index.tsx。
+- `frontend/src/api.ts`：共享请求层，含 Axios 实例、Token 刷新与错误拦截。
+- `frontend/src/store/auth.ts`：登录态 Zustand Store。
+- `frontend/src/types/`：按 user/credential/project/build 模块拆分的共享类型。
+- `frontend/src/utils/`：按 build/format/error 职责拆分的工具函数。
+- `frontend/src/constants/`：按业务模块拆分的全局常量，当前仅 build（构建状态集合与状态颜色）。
+- `frontend/src/styles/`：按 base/layout/common/login/build 模块拆分的全局样式，入口为 index.css。
 
 ## 后端目标结构（渐进演进）
 
@@ -90,7 +103,7 @@ frontend/src/
 ├── components/             # 跨业务共享组件
 ├── hooks/                  # 跨业务共享 Hook
 ├── lib/                    # API Client、Query Client 等基础设施
-├── stores/                 # 跨页面客户端状态
+├── store/                  # 跨页面客户端状态
 └── styles/                 # 全局样式、主题和设计变量
 ```
 

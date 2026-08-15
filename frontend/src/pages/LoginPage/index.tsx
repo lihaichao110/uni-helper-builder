@@ -1,9 +1,9 @@
 import { App, Button, Card, Form, Input, Typography } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { api, setAccessToken } from '../api'
-import { useAuthStore } from '../store'
-import type { User } from '../types'
-import { extractErrorMessage } from '../utils'
+import { api, setAccessToken } from '../../api'
+import { useAuthStore } from '../../store/auth'
+import type { User } from '../../types/user'
+import { extractErrorMessage } from '../../utils/error'
 
 export default function LoginPage() {
   const setUser = useAuthStore((state) => state.setUser)

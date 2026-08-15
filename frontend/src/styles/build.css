@@ -1,0 +1,32 @@
+.build-overview .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.build-overview .ant-descriptions {
+  flex: 1;
+  min-width: 680px;
+}
+.build-steps {
+  padding-top: 16px;
+  border-top: 1px solid #edf0f6;
+}
+.terminal {
+  height: 430px;
+  overflow: auto;
+  margin: 0;
+  padding: 20px;
+  background: #0b1120;
+  color: #c9d7f3;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+@media (max-width: 900px) {
+  .build-overview .ant-descriptions {
+    min-width: 0;
+  }
+}

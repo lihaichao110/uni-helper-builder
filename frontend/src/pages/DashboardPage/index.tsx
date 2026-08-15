@@ -6,9 +6,12 @@ import {
   CloseCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons'
-import { api } from '../api'
-import type { Build, Project } from '../types'
-import { buildStatusColor, buildsRefetchInterval, formatDate, projectNameMap } from '../utils'
+import { api } from '../../api'
+import { buildStatusColor } from '../../constants/build'
+import type { Build } from '../../types/build'
+import type { Project } from '../../types/project'
+import { buildsRefetchInterval, projectNameMap } from '../../utils/build'
+import { formatDate } from '../../utils/format'
 
 export default function DashboardPage() {
   const { data: builds = [] } = useQuery({

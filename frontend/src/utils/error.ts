@@ -1,38 +1,4 @@
-import dayjs from 'dayjs'
 import { isAxiosError } from 'axios'
-import type { Build, BuildStatus, Project } from './types'
-
-/** 活跃（非终态）构建状态集合，需与后端 ACTIVE_BUILD_STATUSES 保持一致 */
-export const ACTIVE_BUILD_STATUSES: ReadonlySet<BuildStatus> = new Set([
-  'queued',
-  'cloning',
-  'installing',
-  'building',
-  'packaging',
-  'canceling',
-])
-
-/** ['builds'] 列表查询的轮询间隔：存在活跃任务时每 5 秒刷新，否则停止轮询 */
-export const buildsRefetchInterval = (query: { state: { data?: Build[] } }) =>
-  (query.state.data ?? []).some((b) => ACTIVE_BUILD_STATUSES.has(b.status)) ? 5000 : false
-
-export const buildStatusColor: Record<BuildStatus, string> = {
-  queued: 'default',
-  cloning: 'processing',
-  installing: 'processing',
-  building: 'blue',
-  packaging: 'purple',
-  succeeded: 'success',
-  failed: 'error',
-  canceling: 'warning',
-  canceled: 'default',
-}
-export const formatDate = (value?: string) =>
-  value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '—'
-export const projectNameMap = (projects: Project[]) =>
-  Object.fromEntries(projects.map((p) => [p.id, p.name]))
-export const bytes = (value: number) =>
-  value > 1024 * 1024 ? `${(value / 1024 / 1024).toFixed(2)} MB` : `${(value / 1024).toFixed(1)} KB`
 
 /** FastAPI 422 参数校验错误项（形如 { loc: ['body', 'name'], msg: '...' }） */
 interface ValidationIssue {
